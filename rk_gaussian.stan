@@ -28,7 +28,7 @@ transformed parameters {
   for (t in 1:T) {
     mu[t] = (intercept + // global intercept
              (1 - treatment[t]) * time_effect * time[t] + // pre-intervention line
-             treatment[t] * (time_effect * intervention_time + (time_effect + posttreatment_effect_diff) * time[t])); // post-intervention line
+             treatment[t] * (time_effect * intervention_time + (time_effect + posttreatment_effect_diff) * (time[t] - intervention_time))); // post-intervention line
   }
 }
 
