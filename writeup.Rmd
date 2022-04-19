@@ -26,7 +26,10 @@ library(patchwork)
 This notebook will not run without access to JHU's COVID-19 data. It can be downloaded
 in ZIP format from their GitHub here: https://github.com/CSSEGISandData/COVID-19
 It should then be decompressed so that `here("data/jhu_covid/COVID-19-master")`
-points to the decompressed directory. The model fitting took less than a half hour on a
+points to the decompressed directory. The notebook will attempt to do this for you,
+but might fail.
+
+The model fitting took less than a half hour on a
 compute cluster, but doing it in the notebook might be slow. So, alternatively, you can clone the
 modeling artifacts from GitHub LFS. After installing Git LFS (https://git-lfs.github.com/),
 they should be pulled down with the repository like so (if cloning from the command line):
@@ -38,6 +41,18 @@ they should be pulled down with the repository like so (if cloning from the comm
 
 Once you do this, the notebook should run without re-fitting the models but will
 still need the data.
+
+```{r}
+# attempt to download and extract the zip to the right place
+if (!file.exists(here("data/jhu_covid/COVID-19-master"))) {
+  extract_path <- here("data/jhu_covid/")
+  dir.create(extract_path, recursive = TRUE)
+  url <- "https://github.com/CSSEGISandData/COVID-19/archive/refs/heads/master.zip"
+  zip_path <- here("data/jhu_covid/latest.zip")
+  download.file(url = url, destfile = zip_path)
+  unzip(zip_path, exdir = extract_path)
+}
+```
 
 # Introduction
 
