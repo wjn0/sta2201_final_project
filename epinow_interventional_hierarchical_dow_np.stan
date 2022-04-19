@@ -62,7 +62,8 @@ transformed parameters {
       alpha_treat[k, s] = alpha_treat_mu[k] + alpha_treat_diff[s];
     }
   }
-  log_reproduction = (B * alpha + (B * alpha_treat) .* treatment[, (tau + 1):T]')';
+  log_reproduction = ((B * alpha) .* (1 - treatment[, (tau + 1):T]') +
+                      (B * alpha_treat) .* treatment[, (tau + 1):T]')';
   reproduction = exp(log_reproduction);
   
   for (t in 1:tau) {
